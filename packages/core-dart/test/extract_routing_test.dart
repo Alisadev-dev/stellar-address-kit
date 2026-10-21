@@ -2,7 +2,7 @@ import 'package:stellar_address_kit/stellar_address_kit.dart';
 import 'package:test/test.dart';
 
 void main() {
-  const baseG = 'GAYCUYT553C5LHVE2XPW5GMEJT4BXGM7AHMJWLAPZP53KJO7EIQADBSI';
+  const baseG = 'GAYCUYT553C5LHVE2XPW5GMEJT4BXGM7AHMJWLAPZP53KJO7EIQADRSI';
   const muxedAddress =
       'MAYCUYT553C5LHVE2XPW5GMEJT4BXGM7AHMJWLAPZP53KJO7EIQACABAAAAAAAAAAEVIG';
   const cAddress =
@@ -224,7 +224,7 @@ void main() {
         () async {
       await expectLater(
         () => extractRouting(RoutingInput(destination: '', memoType: 'none')),
-        throwsA(isA<extractRoutingException>()),
+        throwsA(isA<ExtractRoutingException>()),
       );
     });
 
@@ -271,7 +271,7 @@ void main() {
     final pastedAddresses = <String, String>{
       'controls and surrounding whitespace': '\r\n \t$baseG \t\r\n',
       'zero-width, bidi, variation-selector, and BOM characters':
-          '${baseG.substring(0, 8)}\u200B${baseG.substring(8, 20)}\u202E'$
+          '${baseG.substring(0, 8)}\u200B${baseG.substring(8, 20)}\u202E'
               '${baseG.substring(20, 32)}\uFE0F${baseG.substring(32)}\uFEFF',
       'supplementary variation selector':
           '${baseG.substring(0, 28)}\u{E0100}${baseG.substring(28)}',

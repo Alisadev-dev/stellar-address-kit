@@ -15,6 +15,11 @@ export const MemoField: React.FC<MemoFieldProps> = ({
   onChange,
   memoType = 'text',
 }) => {
+  const uid = React.useId();
+  const inputId = `${uid}-memo-input`;
+  const counterId = `${uid}-memo-counter`;
+  const errorId = `${uid}-memo-error`;
+
   if (!isVisible) return null;
 
   const validation = validateMemo(value, memoType);
@@ -23,8 +28,8 @@ export const MemoField: React.FC<MemoFieldProps> = ({
   const counterValue =
     validation.lengthUnit === 'bytes' ? validation.byteLength : value.length;
   const describedBy = [
-    errorMessage ? 'memo-input-error' : null,
-    showCounter ? 'memo-input-counter' : null,
+    errorMessage ? errorId : null,
+    showCounter ? counterId : null,
   ]
     .filter(Boolean)
     .join(' ');
@@ -32,13 +37,13 @@ export const MemoField: React.FC<MemoFieldProps> = ({
   return (
     <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column' }}>
       <label 
-        htmlFor="memo-input" 
+        htmlFor={inputId} 
         style={{ fontSize: '0.875rem', fontWeight: '500', color: '#475569', marginBottom: '0.25rem' }}
       >
         Memo (Optional)
       </label>
       <input
-        id="memo-input"
+        id={inputId}
         type="text"
         placeholder="Enter memo here"
         value={value}
@@ -69,7 +74,7 @@ export const MemoField: React.FC<MemoFieldProps> = ({
         </div>
         {showCounter && (
           <div
-            id="memo-input-counter"
+            id={counterId}
             aria-live="polite"
             style={{
               fontSize: '0.75rem',
@@ -84,9 +89,8 @@ export const MemoField: React.FC<MemoFieldProps> = ({
       </div>
       {errorMessage && (
         <div
-          id="memo-input-error"
-          role="alert"
-          aria-live="assertive"
+          id={errorId}
+          role="status"
           style={{ fontSize: '0.75rem', color: '#dc2626', marginTop: '0.25rem' }}
         >
           {errorMessage}
